@@ -118,10 +118,32 @@ class Coordinates {
 
   @override
   String toString() => '($x, $y)';
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Coordinates &&
+              runtimeType == other.runtimeType &&
+              x == other.x &&
+              y == other.y;
+
+  @override
+  int get hashCode => x.hashCode ^ y.hashCode;
 }
 
 
 class fieldConstants {
   static const availableItem = '.';
   static const unavailableItem = 'X';
+}
+
+List<Coordinates> formFieldCoordinates(Path fieldsData ) {
+  var fieldItems = <Coordinates>[];
+
+  fieldsData.field.asMap().forEach((i, item) {
+    item.split('').asMap().forEach((j, char) {
+      fieldItems.add(Coordinates(x: i, y: j));
+    });
+  });
+  return fieldItems;
 }

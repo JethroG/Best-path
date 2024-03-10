@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:theshortestway/data/dto/fetch_fileds_data.dart';
 import 'package:theshortestway/network/api_client.dart';

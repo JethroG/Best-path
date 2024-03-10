@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:theshortestway/data/dto/fetch_fileds_data.dart';
+import 'package:theshortestway/data/dto/filed_preview_data.dart';
 import 'package:theshortestway/data/dto/process_filed_data.dart';
+import 'package:theshortestway/tools/best_path_helper.dart';
+import 'package:theshortestway/ui/pages/preview_screen.dart';
 
 class ResultListScreen extends StatefulWidget {
   List<ProcessFiledData>? processDataStatusResponse;
-
-   ResultListScreen({super.key,required this.processDataStatusResponse});
+  FetchFieldsData fieldsData;
+  ResultListScreen({super.key, required this.processDataStatusResponse,required this.fieldsData});
 
   @override
   State<ResultListScreen> createState() => _ResultListScreenState();
@@ -13,7 +17,7 @@ class ResultListScreen extends StatefulWidget {
 class _ResultListScreenState extends State<ResultListScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
@@ -34,22 +38,31 @@ class _ResultListScreenState extends State<ResultListScreen> {
           itemCount: widget.processDataStatusResponse!.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: (){
-
-              },
-              child: Center(
-                  child: Column(
-                    children: [
-                      Text( widget.processDataStatusResponse![index].result!.path.toString(),
-                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),),
-                      SizedBox(height: 4,),
-                      const Divider(
-                        thickness: 1,
-                      ),
-                    ],
-                  )
-              )
-            );
+                onTap: () {
+                  FieldPreviewData fieldPreviewData
+                  =FieldPreviewData(bestPath:widget.processDataStatusResponse![index].result!.steps!.map((e)
+                  => Coordinates(x: e.x!, y: e.y!)).toList(),
+                 field:formFieldCoordinates(widget.fieldsData.data[index]));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PreviewScreen(fieldPreviewData: fieldPreviewData,)));
+                },
+                child: Center(
+                    child: Column(
+                  children: [
+                    Text(
+                      widget.processDataStatusResponse![index].result!.path
+                          .toString(),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    const Divider(
+                      thickness: 1,
+                    ),
+                  ],
+                )));
           },
         ),
       ),

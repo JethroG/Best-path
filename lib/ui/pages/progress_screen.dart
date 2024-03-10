@@ -44,8 +44,6 @@ class _ProcessScreenState extends State<ProcessScreen> {
     setState(() {
       isSetupInProgress = false;
     });
-
-    log('ProcessFiledData ${processFiledData.toString()}');
   }
 
   @override
@@ -78,12 +76,14 @@ class _ProcessScreenState extends State<ProcessScreen> {
       ),
       bottomNavigationBar: BaseAppButton(
         color:
-            !isSetupInProgress ?Theme.of(context).primaryColor: Colors.grey ,
+            !isSetupInProgress ? Theme.of(context).primaryColor : Colors.grey,
         text: 'Send results to server',
-        onPressed: !isSetupInProgress ? () {
-          showLoaderDialog(context);
-          fetchDataFromApi();
-        }: () {},
+        onPressed: !isSetupInProgress
+            ? () {
+                showLoaderDialog(context);
+                fetchDataFromApi();
+              }
+            : () {},
       ),
       body: Container(
         margin: EdgeInsets.all(16),
@@ -131,16 +131,19 @@ class _ProcessScreenState extends State<ProcessScreen> {
   }
 
   void fetchDataFromApi() async {
-
     try {
-
       processDataStatusResponse = await apiClient.sendsFieldsData(
           'https://flutter.webspark.dev/flutter/api', processFiledData);
       Navigator.pop(context);
       log(processDataStatusResponse!.error.toString());
-      if(!processDataStatusResponse!.error!){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => ResultListScreen(processDataStatusResponse: processFiledData,)));
+      if (!processDataStatusResponse!.error!) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ResultListScreen(
+                      processDataStatusResponse: processFiledData,
+                      fieldsData:widget.fetchFieldsData
+                    )));
       }
     } catch (e) {
       Navigator.pop(context);
