@@ -49,7 +49,6 @@ class _ProcessScreenState extends State<ProcessScreen> {
   @override
   void initState() {
     super.initState();
-    log(widget.fetchFieldsData.toString());
     getBestPath();
   }
 
@@ -135,7 +134,6 @@ class _ProcessScreenState extends State<ProcessScreen> {
       processDataStatusResponse = await apiClient.sendsFieldsData(
           'https://flutter.webspark.dev/flutter/api', processFiledData);
       Navigator.pop(context);
-      log(processDataStatusResponse!.error.toString());
       if (!processDataStatusResponse!.error!) {
         Navigator.push(
             context,

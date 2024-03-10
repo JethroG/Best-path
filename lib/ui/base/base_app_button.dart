@@ -23,7 +23,7 @@ class BaseAppButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: color ??
                 Theme.of(context)
-                    .primaryColor, // Use provided color or fallback to theme
+                    .primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),

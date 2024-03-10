@@ -7,8 +7,6 @@ import 'package:theshortestway/data/dto/fetch_fileds_data.dart';
 Future <List<Coordinates>> bestPathHelper(Path fieldsData) async {
 
 
-  log('start of code ${fieldsData.toString()}');
-
   var start = Coordinates(x: fieldsData.start.x, y: fieldsData.start.y);
   final end = Coordinates(x: fieldsData.end.x, y: fieldsData.end.y);
   final field = formField(fieldsData);
@@ -21,7 +19,6 @@ Future <List<Coordinates>> bestPathHelper(Path fieldsData) async {
 
   }
 
-  log('finish of code ${bestPathCoordinated.toString()}');
 
   return bestPathCoordinated;
 }
@@ -45,22 +42,6 @@ Coordinates getNextStepFromCurrent({
   return theBestStep;
 }
 
-// Coordinates getTheBestNextStep({
-//   required Coordinates end,
-//   required List<Coordinates> possibleSteps,
-// }) {
-//   var stepsValues = possibleSteps
-//       .map((it) => (formDoubleFromMatrixCoordinates(it) -
-//               formDoubleFromMatrixCoordinates(end))
-//           .abs())
-//       .toList();
-//
-//   var minStepValue =
-//       stepsValues.reduce((value, element) => value < element ? value : element);
-//   var minStepValueIndex = stepsValues.indexOf(minStepValue);
-//
-//   return possibleSteps[minStepValueIndex];
-// }
 
 Coordinates getTheBestNextStep(Coordinates end, List<Coordinates> possibleSteps) {
   var stepsWithDistance = possibleSteps.map((step) {
